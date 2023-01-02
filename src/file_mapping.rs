@@ -1,12 +1,13 @@
 use std::{
     env::{self, consts::OS},
+    fs::copy,
     os::unix::fs::symlink,
     path::PathBuf,
     str::FromStr,
 };
 
 use crate::{config_file::ConfigFile, os_type::OSType};
-
+/// a data structure that represents the relationship between a config file on the host and its location inside the config repo
 pub struct FileMapping {
     pub repo_path: PathBuf,
     pub file: ConfigFile,
@@ -31,7 +32,10 @@ impl FileMapping {
     }
 }
 impl FileMapping {
-    pub fn applies_to_current_os(&mut self, os_type: OSType) -> bool {
+    /// A helper function. returns true if the file mapping should be acted upon given the current operating system
+    fn applies_to_current_os(&mut self) -> bool {
+        let os_type = OSType::from_str(OS).unwrap();
+
         // if there are no applicable types, default to applying for all os's
         if self.applicable_os_types.is_none() {
             return true;
@@ -47,18 +51,30 @@ impl FileMapping {
 
         return false;
     }
-}
-impl FileMapping {
-    pub fn link_to_version_control(&mut self) {
-        let os_type = OSType::from_str(OS).unwrap();
-        if !self.applies_to_current_os(os_type) {
+
+    pub fn copy_to_version_control(&mut self) {
+        if !self.applies_to_current_os() {
+            return;
+        }
+        // get the paths for the original file and its location in the repo
+        let host_path = self.file.host_path.as_path();
+        let repo_path = self.repo_path.as_path();
+        if !host_path.is_file() {
+            println!("file {} does not exist. skipping...", host_path.display());
+            return;
+        }
+        // copy the file from the host into version control
+        copy(host_path, repo_path).unwrap();
+    }
+    pub fn link_from_version_control(&mut self) {
+        if !self.applies_to_current_os() {
             return;
         }
         let backup_path = PathBuf::from("/Users/kbc/.dotman-backup.d");
         self.file.backup(backup_path);
         symlink(
             self.repo_path.display().to_string(),
-            self.file.path.display().to_string(),
+            self.file.host_path.display().to_string(),
         )
         .expect("could not link file");
     }

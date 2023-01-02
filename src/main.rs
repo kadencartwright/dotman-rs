@@ -1,3 +1,4 @@
+mod cli;
 mod config_file;
 mod file_mapping;
 mod os_type;
@@ -8,11 +9,7 @@ use os_type::OSType;
 use std::{path::PathBuf, vec};
 
 fn main() {
-    let mut mappings = define_configs();
-    for mapping in mappings.iter_mut() {
-        mapping.link_to_version_control();
-    }
-    return;
+    cli::process_command();
 }
 
 fn define_configs() -> Vec<FileMapping> {
