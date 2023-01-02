@@ -1,6 +1,6 @@
 use clap::{Parser, Subcommand};
 
-use crate::define_configs;
+use crate::mapping_definitions::define_mappings;
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
@@ -20,7 +20,7 @@ enum Commands {
 }
 pub fn process_command() {
     let cli = Cli::parse();
-    let mut mappings = define_configs();
+    let mut mappings = define_mappings();
 
     // map the cli enum to it's corresponding action
     match &cli.command {
