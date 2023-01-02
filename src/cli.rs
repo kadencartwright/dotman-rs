@@ -13,7 +13,9 @@ struct Cli {
 //all the possibilites for commands to use from the CLI
 #[derive(Subcommand)]
 enum Commands {
+    /// adds the defined files to the config repo
     CopyToVersionControl,
+    /// backs up original config files, then overwrites them with symlinks from the config repo
     LinkFromVersionControl,
 }
 pub fn process_command() {

@@ -1,23 +1,23 @@
 use std::{
     env::{self, consts::OS},
-    fs::copy,
+    fs::{copy, create_dir_all, remove_file},
     os::unix::fs::symlink,
     path::PathBuf,
     str::FromStr,
 };
 
-use crate::{config_file::ConfigFile, os_type::OSType};
+use crate::os_type::OSType;
 /// a data structure that represents the relationship between a config file on the host and its location inside the config repo
 pub struct FileMapping {
     pub repo_path: PathBuf,
-    pub file: ConfigFile,
+    pub host_path: PathBuf,
     applicable_os_types: Option<Vec<OSType>>,
 }
 
 impl FileMapping {
     pub fn new(
         repo_path: PathBuf,
-        file: ConfigFile,
+        host_path: PathBuf,
         applicable_os_types: Option<Vec<OSType>>,
     ) -> Self {
         let mut path = env::current_dir().unwrap();
@@ -26,7 +26,7 @@ impl FileMapping {
         path.push(repo_path);
         return FileMapping {
             repo_path: path,
-            file,
+            host_path,
             applicable_os_types,
         };
     }
@@ -57,7 +57,7 @@ impl FileMapping {
             return;
         }
         // get the paths for the original file and its location in the repo
-        let host_path = self.file.host_path.as_path();
+        let host_path = self.host_path.as_path();
         let repo_path = self.repo_path.as_path();
         if !host_path.is_file() {
             println!("file {} does not exist. skipping...", host_path.display());
@@ -71,11 +71,23 @@ impl FileMapping {
             return;
         }
         let backup_path = PathBuf::from("/Users/kbc/.dotman-backup.d");
-        self.file.backup(backup_path);
+        self.backup(backup_path);
         symlink(
             self.repo_path.display().to_string(),
-            self.file.host_path.display().to_string(),
+            self.host_path.display().to_string(),
         )
         .expect("could not link file");
+    }
+    /// backs up a file to the backup location. mimics the dir structure relative to `/`
+    pub fn backup(&self, backup_store_path: PathBuf) {
+        if !self.host_path.as_path().exists() {
+            return;
+        }
+        let backup_path = PathBuf::new()
+            .join(backup_store_path.as_path())
+            .join(self.host_path.as_path().strip_prefix("/Users/kbc").unwrap());
+        create_dir_all(backup_path.as_path().parent().unwrap()).err();
+        copy(self.host_path.as_path(), backup_path.as_path()).unwrap();
+        remove_file(self.host_path.as_path()).unwrap();
     }
 }
