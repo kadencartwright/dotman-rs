@@ -1,5 +1,7 @@
 use std::{io::ErrorKind, str::FromStr};
-#[derive(PartialEq)]
+
+use serde_derive::Deserialize;
+#[derive(PartialEq, Deserialize)]
 pub enum OSType {
     Linux,
     MacOS,

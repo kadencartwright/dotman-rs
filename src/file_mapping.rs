@@ -6,8 +6,11 @@ use std::{
     str::FromStr,
 };
 
+use serde_derive::Deserialize;
+
 use crate::os_type::OSType;
 /// a data structure that represents the relationship between a config file on the host and its location inside the config repo
+#[derive(Deserialize)]
 pub struct FileMapping {
     pub repo_path: PathBuf,
     pub host_path: PathBuf,
