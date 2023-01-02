@@ -70,8 +70,7 @@ impl FileMapping {
         if !self.applies_to_current_os() {
             return;
         }
-        let backup_path = PathBuf::from("/Users/kbc/.dotman-backup.d");
-        self.backup(backup_path);
+        self.backup();
         symlink(
             self.repo_path.display().to_string(),
             self.host_path.display().to_string(),
@@ -79,13 +78,15 @@ impl FileMapping {
         .expect("could not link file");
     }
     /// backs up a file to the backup location. mimics the dir structure relative to `/`
-    pub fn backup(&self, backup_store_path: PathBuf) {
+    pub fn backup(&self) {
         if !self.host_path.as_path().exists() {
             return;
         }
+        let backup_store_path = PathBuf::from("/Users/kbc/.dotman-backup.d");
         let backup_path = PathBuf::new()
             .join(backup_store_path.as_path())
             .join(self.host_path.as_path().strip_prefix("/Users/kbc").unwrap());
+
         create_dir_all(backup_path.as_path().parent().unwrap()).err();
         copy(self.host_path.as_path(), backup_path.as_path()).unwrap();
         remove_file(self.host_path.as_path()).unwrap();
