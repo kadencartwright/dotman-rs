@@ -1,0 +1,32 @@
+[[dependencies]]
+name = "rust"
+install_commands = ["curl https://sh.rustup.rs -sSf | sh -s -- -y"]
+
+[[dependencies]]
+name = "unzip"
+install_commands = [
+  "apt-get install unzip"
+]
+
+[[dependencies]]
+name = "curl"
+install_commands = ["apt-get install curl -y"]
+
+[[dependencies]]
+name = "fnm"
+depends_on = ["unzip","curl"]
+install_commands = [ 
+  "curl -fsSL https://fnm.vercel.app/install | bash"
+]
+[[dependencies]]
+name = "neovim"
+install_commands = [""]
+
+[[file_configs]]
+repo_path= ""
+link_path = ""
+related_program = ""
+
+[[file_configs]]
+repo_path= ""
+link_path = ""
