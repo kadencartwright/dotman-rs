@@ -3,6 +3,7 @@ use clap::{arg, Parser, Subcommand};
 use crate::{
     file_mapping::FileMapping,
     mapping_definitions::{define_mappings, read_mappings_config_file},
+    dependency_definition::DependencyDefinition
 };
 
 #[derive(Parser)]
