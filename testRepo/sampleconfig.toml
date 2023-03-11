@@ -1,24 +1,4 @@
-[[dependencies]]
-name = "rust"
-install_commands = ["curl https://sh.rustup.rs -sSf | sh -s -- -y"]
-install_check = ""
-
-[[dependencies]]
-name = "yay"
-install_commands = ["sudo pacman -Sy yay"]
-
-[[dependencies]]
-name = "fnm"
-install_commands = [
-    "curl -fsSL https://fnm.vercel.app/install | bash"
-]
-install_check = ""
-
-[[dependencies]]
-name = "neovim"
-install_commands = ["pacman -S neovim"]
-
 [[file_configs]]
-repo_path= "dotfiles/nvim/"
-link_path = "~/.config/nvim/"
+repo_path= "testRepo/dotfiles/nvim/"
+link_path = "/home/kbc/.config/nvim/"
 related_program = "neovim"

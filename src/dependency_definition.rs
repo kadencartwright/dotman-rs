@@ -20,14 +20,14 @@ impl DependencyDefinition {
 impl DependencyDefinition {
     pub fn install(&self) {
         if self.check_already_installed() {
-            return;
+            return ;
         }
         for command in self.install_commands.iter() {
-            Command::new("sh").arg(command).output();
+            Command::new("sh").arg(command).output().unwrap();
         }
     }
     /// returns true if the install check passes
     pub fn check_already_installed(&self) -> bool {
-        which(self.name).is_ok()
+        which(self.name.to_owned()).is_ok()
     }
 }

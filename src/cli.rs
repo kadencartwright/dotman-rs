@@ -3,7 +3,6 @@ use clap::{arg, Parser, Subcommand};
 use crate::{
     config_mapping::ConfigMapping,
     mapping_definitions::{define_mappings, read_mappings_config_file},
-    dependency_definition::DependencyDefinition
 };
 
 #[derive(Parser)]
@@ -47,4 +46,4 @@ fn get_mappings(maybe_file: &Option<String>) -> Vec<ConfigMapping> {
         Some(path) => read_mappings_config_file(path),
         None => define_mappings(),
     };
-}
+} 
