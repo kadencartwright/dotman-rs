@@ -1,6 +1,5 @@
 use std::{
-    borrow::BorrowMut,
-    env::{self, consts::OS},
+    env::{self, consts::OS },
     fs::{self, copy, create_dir_all, remove_file},
     os::unix::fs::symlink,
     path::{PathBuf, Path},
@@ -8,6 +7,7 @@ use std::{
 };
 
 use crate::os_type::OSType;
+use home::home_dir;
 use serde_derive::Deserialize;
 /// a data structure that represents the relationship between a config file on the host and its location inside the config repo
 #[derive(Deserialize)]
@@ -23,13 +23,15 @@ impl ConfigMapping {
         link_path: PathBuf,
         applicable_os_types: Option<Vec<OSType>>,
     ) -> Self {
-        let mut path = env::current_dir().unwrap();
-        path.push("testRepo");
-        path.push("dotfiles");
-        path.push(repo_path);
+        let mut prefixed_repo_path = env::current_dir().unwrap();
+        prefixed_repo_path.push("testRepo");
+        prefixed_repo_path.push("dotfiles");
+        prefixed_repo_path.push(repo_path);
+        let mut prefixed_link_path = home_dir().unwrap();
+        prefixed_link_path.push(link_path);
         return ConfigMapping {
-            repo_path: path,
-            link_path,
+            repo_path: prefixed_repo_path,
+            link_path:prefixed_link_path,
             applicable_os_types,
         };
     }

@@ -1,4 +1,9 @@
 [[file_configs]]
 repo_path= "testRepo/dotfiles/nvim/"
-link_path = "/home/kbc/.config/nvim/"
+link_path = ".config/nvim/"
 related_program = "neovim"
+
+[[file_configs]]
+repo_path= "testRepo/dotfiles/alacritty/"
+link_path = ".config/alacritty/"
+related_program = "alacritty"
