@@ -1,7 +1,7 @@
 use clap::{arg, Parser, Subcommand};
 
 use crate::{
-    file_mapping::FileMapping,
+    config_mapping::ConfigMapping,
     mapping_definitions::{define_mappings, read_mappings_config_file},
     dependency_definition::DependencyDefinition
 };
@@ -42,7 +42,7 @@ pub fn process_command() {
             .for_each(|mapping| mapping.link_from_version_control()),
     }
 }
-fn get_mappings(maybe_file: &Option<String>) -> Vec<FileMapping> {
+fn get_mappings(maybe_file: &Option<String>) -> Vec<ConfigMapping> {
     return match maybe_file {
         Some(path) => read_mappings_config_file(path),
         None => define_mappings(),
