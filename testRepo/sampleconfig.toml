@@ -4,35 +4,21 @@ install_commands = ["curl https://sh.rustup.rs -sSf | sh -s -- -y"]
 install_check = ""
 
 [[dependencies]]
-name = "unzip"
-install_commands = [
-  "apt-get install unzip"
-]
-install_check = "which unzip"
-
-[[dependencies]]
-name = "curl"
-install_commands = ["apt-get install curl -y"]
-install_check = ""
+name = "yay"
+install_commands = ["sudo pacman -Sy yay"]
 
 [[dependencies]]
 name = "fnm"
-depends_on = ["unzip","curl"]
-install_commands = [ 
-  "curl -fsSL https://fnm.vercel.app/install | bash"
+install_commands = [
+    "curl -fsSL https://fnm.vercel.app/install | bash"
 ]
 install_check = ""
 
 [[dependencies]]
 name = "neovim"
-install_commands = [""]
-install_check = ""
+install_commands = ["pacman -S neovim"]
 
 [[file_configs]]
-repo_path= ""
-link_path = ""
-related_program = ""
-
-[[file_configs]]
-repo_path= ""
-link_path = ""
+repo_path= "dotfiles/nvim/"
+link_path = "~/.config/nvim/"
+related_program = "neovim"

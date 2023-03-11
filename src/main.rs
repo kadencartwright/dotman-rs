@@ -1,6 +1,6 @@
 mod cli;
 
-mod file_mapping;
+mod config_mapping;
 mod os_type;
 mod dependency_definition;
 fn main() {

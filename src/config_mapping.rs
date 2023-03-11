@@ -6,18 +6,17 @@ use std::{
     str::FromStr,
 };
 
-use serde_derive::Deserialize;
-
 use crate::os_type::OSType;
+use serde_derive::Deserialize;
 /// a data structure that represents the relationship between a config file on the host and its location inside the config repo
 #[derive(Deserialize)]
-pub struct FileMapping {
+pub struct ConfigMapping {
     pub repo_path: PathBuf,
     pub host_path: PathBuf,
     applicable_os_types: Option<Vec<OSType>>,
 }
 
-impl FileMapping {
+impl ConfigMapping {
     pub fn new(
         repo_path: PathBuf,
         host_path: PathBuf,
@@ -27,14 +26,14 @@ impl FileMapping {
         path.push("testRepo");
         path.push("dotfiles");
         path.push(repo_path);
-        return FileMapping {
+        return ConfigMapping {
             repo_path: path,
             host_path,
             applicable_os_types,
         };
     }
 }
-impl FileMapping {
+impl ConfigMapping {
     /// A helper function. returns true if the file mapping should be acted upon given the current operating system
     fn applies_to_current_os(&mut self) -> bool {
         let os_type = OSType::from_str(OS).unwrap();
@@ -54,7 +53,6 @@ impl FileMapping {
 
         return false;
     }
-
     pub fn copy_to_version_control(&mut self) {
         if !self.applies_to_current_os() {
             return;
@@ -78,8 +76,9 @@ impl FileMapping {
             self.repo_path.display().to_string(),
             self.host_path.display().to_string(),
         )
-        .expect("could not link file");
+        .expect("could not link file/directory");
     }
+
     /// backs up a file to the backup location. mimics the dir structure relative to `/`
     pub fn backup(&self) {
         if !self.host_path.as_path().exists() {

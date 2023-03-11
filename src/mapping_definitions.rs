@@ -2,12 +2,12 @@ use std::{fs::read_to_string, path::PathBuf};
 
 use serde_derive::Deserialize;
 
-use crate::{file_mapping::FileMapping, os_type::OSType};
+use crate::{ os_type::OSType, config_mapping::ConfigMapping};
 
-pub fn define_mappings() -> Vec<FileMapping> {
+pub fn define_mappings() -> Vec<ConfigMapping> {
     let types = Some(vec![OSType::Linux]);
     let home_dir = home::home_dir().expect("could not find home directory");
-    vec![FileMapping::new(
+    vec![ConfigMapping::new(
         PathBuf::from("vim/.vimrc"),
         home_dir.join(".vimrc.test"),
         types,
@@ -15,10 +15,10 @@ pub fn define_mappings() -> Vec<FileMapping> {
 }
 #[derive(Deserialize)]
 pub struct ConfigFileData {
-    mappings: Vec<FileMapping>,
+    mappings: Vec<ConfigMapping>,
 }
 
-pub fn read_mappings_config_file(path: &str) -> Vec<FileMapping> {
+pub fn read_mappings_config_file(path: &str) -> Vec<ConfigMapping> {
     let file_contents = read_to_string(path).unwrap();
     let file_data: ConfigFileData = toml::from_str(&file_contents).unwrap();
     return file_data.mappings;
