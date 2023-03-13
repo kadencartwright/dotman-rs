@@ -1,6 +1,6 @@
 use std::{
     env::{self, consts::OS},
-    fs::{self, copy, create_dir_all, remove_dir, remove_file},
+    fs::{self, create_dir_all, remove_file},
     io,
     os::unix::fs::symlink,
     path::{Path, PathBuf},

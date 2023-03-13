@@ -9,7 +9,7 @@ pub struct DependencyDefinition {
 }
 
 impl DependencyDefinition {
-    pub fn new(name: String, install_commands: Vec<String>, install_check: String) -> Self {
+    pub fn new(name: String, install_commands: Vec<String>, _install_check: String) -> Self {
         DependencyDefinition {
             name,
             install_commands,
