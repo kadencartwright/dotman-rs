@@ -1,9 +1,9 @@
 [[file_configs]]
-repo_path= "testRepo/dotfiles/nvim/"
+repo_path= "nvim/"
 link_path = ".config/nvim/"
 related_program = "neovim"
 
 [[file_configs]]
-repo_path= "testRepo/dotfiles/alacritty/"
+repo_path= "alacritty/"
 link_path = ".config/alacritty/"
 related_program = "alacritty"
