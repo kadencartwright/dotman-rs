@@ -110,10 +110,22 @@ impl ConfigMapping {
     }
     pub fn remove_fs_item(path: PathBuf) -> Result<(), std::io::Error> {
         if path.is_dir() {
-            fs::remove_dir_all(path)
-        } else {
-            remove_file(path)
+            let path_str = path.to_str().unwrap();
+            if path_str.ends_with("/") {
+                let (normalized, _) = path_str.split_at(path_str.len() - 1);
+                fs::remove_dir_all(normalized).unwrap();
+            } else {
+                fs::remove_dir_all(path_str).unwrap();
+            }
+            return Ok(());
+        } else if path.is_file() {
+            remove_file(path).unwrap();
+            return Ok(());
         }
+        return Err(std::io::Error::new(
+            io::ErrorKind::Unsupported,
+            "item was neither file nor dir",
+        ));
     }
     pub fn copy_recursively(
         source: impl AsRef<Path>,
