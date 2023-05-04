@@ -1,2 +1,2 @@
 /target
-plugin/packer_compiled.lua
+testRepo/dotfiles/nvim/plugin/**
