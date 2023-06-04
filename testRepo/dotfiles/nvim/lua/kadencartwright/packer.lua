@@ -12,7 +12,6 @@ return require('packer').startup(function(use)
         -- or                            , branch = '0.1.x',
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
-
     use('navarasu/onedark.nvim')
     use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' })
     use('nvim-treesitter/playground')
@@ -40,9 +39,6 @@ return require('packer').startup(function(use)
             { 'rafamadriz/friendly-snippets' },
         }
     }
-    use('tpope/vim-dadbod')
-    use('kristijanhusak/vim-dadbod-ui')
-    use('styled-components/vim-styled-components')
     use {
         'MunifTanjim/prettier.nvim',
         requires = {
@@ -52,4 +48,7 @@ return require('packer').startup(function(use)
     use('towolf/vim-helm')
     use('windwp/nvim-ts-autotag')
     use('windwp/nvim-autopairs')
+    use('tpope/vim-dadbod')
+    use('kristijanhusak/vim-dadbod-ui')
+    use('mfussenegger/nvim-dap')
 end)
