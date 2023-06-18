@@ -7,3 +7,20 @@ related_program = "neovim"
 repo_path= "alacritty/"
 link_path = ".config/alacritty/"
 related_program = "alacritty"
+
+[[file_configs]]
+repo_path= "hyprland/"
+link_path = ".config/hypr/"
+related_program = "hyprland"
+[[file_configs]]
+repo_path= "i3"
+link_path = ".config/i3/"
+related_program = "i3"
+[[file_configs]]
+repo_path= "waybar"
+link_path = ".config/waybar/"
+related_program = "waybar"
+[[file_configs]]
+repo_path= "sway"
+link_path = ".config/sway/"
+related_program = "sway"
