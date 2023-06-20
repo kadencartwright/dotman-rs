@@ -24,3 +24,16 @@ related_program = "waybar"
 repo_path= "sway"
 link_path = ".config/sway/"
 related_program = "sway"
+
+[[file_configs]]
+repo_path= "zsh"
+link_path = ".config/zsh/"
+related_program = "zsh"
+[[file_configs]]
+repo_path= "zsh"
+link_path = ".zshenv"
+related_program = "zsh"
+[[file_configs]]
+repo_path= "fuzzel"
+link_path = ".config/fuzzel/"
+related_program = "fuzzel"
