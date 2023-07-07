@@ -2,6 +2,10 @@ export PATH=/home/k/bin:$PATH
 export EDITOR=$(which nvim)
 export VISUAL=$(which nvim)
 export HISTFILE=~/.zsh_history
+export HISTSIZE=10000
+export SAVEHIST=10000
+setopt appendhistory
+
 ## setup dependencies if not installed
 function install_if_not_already(){
     if [ -f "/etc/arch-release" ]; then
@@ -14,7 +18,7 @@ function install_if_not_already(){
     fi
 }
 # add plugins to install here
-plugins=starship-git,zsh-autosuggestions,zsh-completions
+plugins=starship,zsh-autosuggestions,zsh-completions
 
 for plugin in $(echo $plugins | sed "s/,/ /g") 
 do
