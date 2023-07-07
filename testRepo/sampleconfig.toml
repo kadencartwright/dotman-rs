@@ -37,3 +37,7 @@ related_program = "zsh"
 repo_path= "fuzzel"
 link_path = ".config/fuzzel/"
 related_program = "fuzzel"
+[[file_configs]]
+repo_path= "starship/"
+link_path = ".config/starship/"
+related_program = "starship"

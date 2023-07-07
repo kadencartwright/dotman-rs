@@ -1,0 +1,23 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+add_newline = false 
+format = """[\uE0B6](fg:blue)[$directory](fg:black bg:blue)[\uE0B0](blue bg:green)$git_branch(fg:black bg:green)$git_status(#3A95C7 bg:#40A9E0)$time[\uE0B0](green bg:none) $all$character """
+
+[directory]
+style = "bg:blue fg:bright-white"
+
+[git_branch]
+format = "[ $symbol$branch ]($style)"
+style = "bg:green fg:black"
+
+[git_status]
+format = "[ $all_status$ahead_behind ]($style)"
+style = "bg:green fg:black"
+
+[time]
+disabled = true 
+format = "[ $time ]($style)"
+style = "bg:green fg:black"
+
+[nodejs]
+format = ''
+
