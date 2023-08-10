@@ -7,7 +7,8 @@ lsp.ensure_installed({
 	'eslint',
 	'lua_ls',
 	'rust_analyzer',
-    'gopls'
+    'gopls',
+    'bashls'
 })
 -- Fix Undefined global 'vim'
 lsp.configure('lua_ls', {
