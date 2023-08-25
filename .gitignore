@@ -1,3 +1,4 @@
 /target
 testRepo/dotfiles/nvim/plugin/**
 packer_compiled.lua
+testRepo/dotfiles/zsh/.zcompdump
