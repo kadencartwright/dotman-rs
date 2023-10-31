@@ -20,7 +20,7 @@ func runCli() {
 		os.Exit(1)
 
 	}
-	switch os.Args[0] {
+	switch os.Args[1] {
 	case "copy":
 		errs := config.Copy()
 		if len(errs) != 0 {

@@ -25,8 +25,9 @@ func backup(path string) error {
 		return err
 	}
 	backupDir := filepath.Join(hd, "dotman.d", "backup", path)
-	err = os.MkdirAll(backupDir, 0666)
+	err = os.MkdirAll(backupDir, os.ModePerm)
 	if err != nil {
+		println(err.Error())
 		return err
 	}
 	return nil
@@ -38,7 +39,7 @@ func copyRecursively(source, destination string) error {
 		return nil
 	}
 	err := os.RemoveAll(filepath.Join(destination))
-	if err!= nil && !errors.Is(err, fs.ErrNotExist) {
+	if err != nil && !errors.Is(err, fs.ErrNotExist) {
 		return err
 	}
 	cmd := exec.Command("cp", "-r", source, destination)

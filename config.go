@@ -1,9 +1,11 @@
 package main
 
 import (
-	"github.com/pelletier/go-toml/v2"
+	"fmt"
 	"os"
 	"path/filepath"
+
+	"github.com/pelletier/go-toml/v2"
 )
 
 type Config struct {
@@ -19,9 +21,14 @@ type PathMapping struct {
 // using the config values, links files fron their location in the repo to related host paths
 func (cfg *Config) Link() []error {
 	errs := []error{}
-	errs = append(errs, os.Chdir(cfg.BaseDirectory))
+	err := os.Chdir(cfg.BaseDirectory)
+	if err != nil {
+		println("chdir err:")
+		println(err.Error())
+		errs = append(errs)
+	}
 	for _, pm := range cfg.PathMappings {
-		err := pm.BackupHost()
+		err = pm.BackupHost()
 		if err != nil {
 			errs = append(errs, err)
 		}
@@ -53,7 +60,15 @@ func (cfg *Config) Copy() []error {
 
 }
 func (pm *PathMapping) LinkPaths() error {
-	return linkPaths(pm.RepoPath, pm.HostPath)
+	wd, err := os.Getwd()
+
+	if err != nil {
+		return err
+	}
+    hd,err:= os.UserHomeDir()
+	qr := filepath.Join(wd, pm.RepoPath)
+	qh := filepath.Join(hd, pm.HostPath)
+	return linkPaths(qr, qh)
 }
 func (pm *PathMapping) BackupHost() error {
 	return backup(pm.HostPath)
@@ -71,7 +86,7 @@ func NewConfigFromFile(path string) (*Config, error) {
 		return nil, err
 	}
 	cfg := Config{}
-	err = toml.Unmarshal(file, cfg)
+	err = toml.Unmarshal(file, &cfg)
 
 	if err != nil {
 		return nil, err
