@@ -1,4 +1,0 @@
-base_directory = "."
-[[path_mappings]]
-repo_path = "test"
-host_path = ".config/test"
