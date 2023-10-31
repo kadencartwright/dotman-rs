@@ -42,4 +42,3 @@ func runCli() {
 		os.Exit(1)
 	}
 }
-

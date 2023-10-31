@@ -20,11 +20,11 @@ func linkPaths(source, destination string) error {
 	return err
 }
 func backup(path string) error {
-	hd, err := os.UserHomeDir()
+    cd,err:=os.UserCacheDir()
 	if err != nil {
 		return err
 	}
-	backupDir := filepath.Join(hd, "dotman.d", "backup", path)
+	backupDir := filepath.Join(cd, "dotman", "backup", path)
 	err = os.MkdirAll(backupDir, os.ModePerm)
 	if err != nil {
 		println(err.Error())
