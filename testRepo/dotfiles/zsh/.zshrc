@@ -13,8 +13,6 @@ function install_if_not_already(){
         else
             yay -S $1 --noconfirm
         fi
-    else
-        echo "not using arch. please install plugins manually"
     fi
 }
 # add plugins to install here
@@ -24,8 +22,14 @@ for plugin in $(echo $plugins | sed "s/,/ /g")
 do
     install_if_not_already $plugin
 done
-# enable fish like autosuggestions and history search
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+# enable fish like autosuggestions and history search  if installed
+if test -d /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh; then
+  source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+fi
+which -s brew &> /dev/null
+if [[ $? == 0 ]] ; then
+  source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
 eval "$(fnm env --use-on-cd)"
 # init starship prompt
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
