@@ -22,8 +22,6 @@ func (cfg *Config) Link() []error {
 	errs := []error{}
 	err := os.Chdir(cfg.BaseDirectory)
 	if err != nil {
-		println("chdir err:")
-		println(err.Error())
 		errs = append(errs)
 	}
 	for _, pm := range cfg.PathMappings {
@@ -45,7 +43,10 @@ func (cfg *Config) Link() []error {
 // using the config values, copies files from their location on the host into the repo
 func (cfg *Config) Copy() []error {
 	errs := []error{}
-	errs = append(errs, os.Chdir(cfg.BaseDirectory))
+	err := os.Chdir(cfg.BaseDirectory)
+	if err != nil {
+		errs = append(errs)
+	}
 	for _, pm := range cfg.PathMappings {
 		err := pm.CopyRecursively()
 		if err != nil {
